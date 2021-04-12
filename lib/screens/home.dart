@@ -163,12 +163,15 @@ class _HomeState extends State<Home> {
         Container(
             child: ElevatedButton(
                 onPressed: () {
+                  setState(() {
+                    if(today==null)
+                      today=DateTime.now();
+                      theAge = calc.calculatorAge(birthdate, today);
+                    nextBirthday=calc.calculatorNextBirthday(birthdate, today);
+                    print(nextBirthday);
+                    print(theAge);
 
-                  theAge = calc.calculatorAge(birthdate, today);
-                  nextBirthday=calc.calculatorNextBirthday(birthdate, today);
-                  print(nextBirthday);
-                  print(theAge);
-                  setState(() {});
+                  });
                 },
                 child: Text(
                   'أحسب',
