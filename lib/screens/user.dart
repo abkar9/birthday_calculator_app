@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class User extends StatefulWidget {
   @override
-  _UserState createState() => _UserState();
+  UserState createState() => UserState();
 }
 
-class _UserState extends State<User> {
+class UserState extends State<User> {
 
   static var textEditingController = TextEditingController();
   @override

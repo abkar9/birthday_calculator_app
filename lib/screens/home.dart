@@ -164,9 +164,11 @@ class _HomeState extends State<Home> {
             child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    if(today==null)
+                    if(today==null&&birthdate==null){
                       today=DateTime.now();
-                      theAge = calc.calculatorAge(birthdate, today);
+                      birthdate=DateTime.now();
+                    }
+                    theAge = calc.calculatorAge(birthdate, today);
                     nextBirthday=calc.calculatorNextBirthday(birthdate, today);
                     print(nextBirthday);
                     print(theAge);
@@ -199,7 +201,8 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                     fontSize: fontSize,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                ),
               )),
             ),
           ),
