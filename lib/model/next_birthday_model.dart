@@ -1,13 +1,8 @@
+class NextBirthday {
+  int months, days;
 
-
-class NextBirthday{
-  int ages,months,days;
-
-  NextBirthday(){
-    ages=0;
-    months=0;
-    days=0;
+  NextBirthday() {
+    months = 0;
+    days = 0;
   }
-
-
 }

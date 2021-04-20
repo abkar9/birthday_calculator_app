@@ -1,5 +1,3 @@
-
-
 import 'package:age/age.dart';
 import 'package:birthday_calculator/model/the_age_model.dart';
 
@@ -20,18 +18,19 @@ class Calculator {
     return _theAge;
   }
 
-
   NextBirthday calculatorNextBirthday(DateTime birthday, DateTime today) {
     DateTime tempDate = DateTime(today.year, birthday.month, birthday.day);
     DateTime nextBirthdayDate = tempDate.isBefore(today)
         ? Age.add(date: tempDate, duration: AgeDuration(years: 1))
         : tempDate;
-    AgeDuration nextBirthdayDuration = Age.dateDifference(fromDate: today, toDate: nextBirthdayDate);
-    print('You next birthday will be on $nextBirthdayDate or in $nextBirthdayDuration');
+    AgeDuration nextBirthdayDuration =
+        Age.dateDifference(fromDate: today, toDate: nextBirthdayDate);
+    print(
+        'You next birthday will be on $nextBirthdayDate or in $nextBirthdayDuration');
 
-    _nextBirthday.ages=nextBirthdayDuration.years;
-    _nextBirthday.months=nextBirthdayDuration.months;
-    _nextBirthday.days=nextBirthdayDuration.days;
+    _nextBirthday.months = nextBirthdayDuration.months;
+    _nextBirthday.days = nextBirthdayDuration.days;
+
     return _nextBirthday;
   }
 }

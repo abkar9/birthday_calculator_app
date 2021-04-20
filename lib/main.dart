@@ -1,20 +1,26 @@
 import 'package:birthday_calculator/screens/user.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-
+import 'package:birthday_calculator/utils/factory_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'model/theme_model.dart';
 
 void main() {
   runApp(
-    MyApp(),
+    ChangeNotifierProvider(
+        create: (_) => ThemeChanger(FactoryTheme.lightTheme()), child: MyApp()),
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(
+      context,
+    );
     return MaterialApp(
-      theme: ThemeData(
-          primarySwatch: Colors.indigo), //Controlling theme of our app
+      theme: theme.getTheme(),
+      //Controlling theme of our app
 
       //widget for create splash Screen
       home: AnimatedSplashScreen(
@@ -24,15 +30,14 @@ class MyApp extends StatelessWidget {
           textDirection: TextDirection.rtl,
         ),
         splash: Image.asset(
-          'images/age.png',
-          width: 400,
-          height: 400,
+          'images/bg_logo.png',
+
         ),
         backgroundColor: Colors.white,
-        animationDuration: Duration(milliseconds: 1500),
-        splashTransition: SplashTransition.rotationTransition,
-        duration: 500,
-        splashIconSize: 100,
+        animationDuration: Duration(milliseconds: 700),
+        splashTransition: SplashTransition.scaleTransition,
+        duration: 100,
+        splashIconSize: 400,
       ),
     );
   }

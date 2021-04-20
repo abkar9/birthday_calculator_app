@@ -13,17 +13,23 @@ class HomeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()=>showDialog(context: context,builder: (context)=>
-          AlertDialog(
-            title: Text('الخروج من التطبيق'),actions: [
-              ElevatedButton(child: Text('خروج'),
-                  onPressed:()=> Navigator.of(context).pop(true)),
-            ElevatedButton(child: Text('إلغاء'),
-                onPressed:()=> exit(0)),],)),
+      onWillPop: () => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('هل أنت منأكد من الخروج من التطبيق'),
+          title: Text('الخروج من التطبيق'),
+          actions: [
+            ElevatedButton(
+                child: Text('إلغاء'),
+                onPressed: () => Navigator.of(context).pop(false)),
+            ElevatedButton(child: Text('خروج'), onPressed: () => exit(0)),
+          ],
+        ),
+      ),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: appbar.appbar(),
+          appBar: appbar.appbar(context),
           body: TabBarView(
             children: [Home(), Setting()],
           ),

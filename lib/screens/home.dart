@@ -7,23 +7,25 @@ import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   DateTime timeNow;
 
   var textEditingController1 = TextEditingController(text: '');
-  var textEditingController2 = TextEditingController(text: ReformatDate.reformat(DateTime.now()));
+  var textEditingController2 =
+      TextEditingController(text: ReformatDate.reformat(DateTime.now()));
   var appbar = AppbarBirthdayApp();
   double widthSize = 120;
   double heightSize = 50;
   double fontSize = 20;
   NextBirthday nextBirthday = NextBirthday();
-  TheAge theAge = TheAge();
+  static TheAge theAge = TheAge();
   Calculator calc = Calculator();
   DateTime birthdate;
-  DateTime today;
+  DateTime today = DateTime.now();
+  DateTime empty = DateTime.now();
   @override
   Widget build(BuildContext context) {
     Widget space = _buildSpace();
@@ -32,9 +34,9 @@ class _HomeState extends State<Home> {
     Widget todayDate = _buildSubTitle('تاريخ اليوم');
     Widget textField2 = _buildTextField2();
     Widget rowButtons = _buildRowButtons();
-    Widget ageIs = _buildSubTitle('عمرك ');
+    Widget ageIs = _buildSubTitle(' عمرك الحالي هو');
     Widget rowContainerData1 = _buildRowContainerData1();
-    Widget nextBirthDay = _buildSubTitle('يوم ميلادك القادم ');
+    Widget nextBirthDay = _buildSubTitle('تبقى على يوم ميلادك القادم ');
     Widget rowContainerData2 = _buildRowContainerData2();
 
     return Scaffold(
@@ -71,9 +73,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildSpace() {
-
     return SizedBox(
-
       height: 25,
     );
   }
@@ -139,40 +139,45 @@ class _HomeState extends State<Home> {
     double widthSize = 120;
     double heightSize = 50;
     double fontSize = 20;
+    var color = MaterialStateProperty.all(Theme.of(context).accentColor);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
             child: ElevatedButton(
+                style: ButtonStyle(backgroundColor: color),
                 onPressed: () {
-                  TheAge theAgeClean=TheAge();
-                  NextBirthday nextBirthdayClean=NextBirthday();
-                  theAge=theAgeClean;
-                  nextBirthday=nextBirthdayClean;
-                  setState(() {
-                  });
+                  TheAge theAgeClean = TheAge();
+                  NextBirthday nextBirthdayClean = NextBirthday();
+                  theAge = theAgeClean;
+                  nextBirthday = nextBirthdayClean;
+                  textEditingController1.text = '';
+                  birthdate = empty;
 
+                  setState(() {});
                 },
                 child: Text(
                   'مسح',
-                  style: TextStyle(fontSize: fontSize),
+                  style: TextStyle(
+                      fontSize: fontSize, fontWeight: FontWeight.bold),
                 )),
             width: widthSize,
-            height: heightSize
-        ),
+            height: heightSize),
         Container(
             child: ElevatedButton(
+                style: ButtonStyle(backgroundColor: color),
                 onPressed: () {
                   setState(() {
-                    if(today==null&&birthdate==null){
-                      today=DateTime.now();
-                      birthdate=DateTime.now();
+                    if (today == null && birthdate == null) {
+                      today = DateTime.now();
+                      birthdate = DateTime.now();
                     }
                     theAge = calc.calculatorAge(birthdate, today);
-                    nextBirthday=calc.calculatorNextBirthday(birthdate, today);
+
+                    nextBirthday =
+                        calc.calculatorNextBirthday(birthdate, today);
                     print(nextBirthday);
                     print(theAge);
-
                   });
                 },
                 child: Text(
@@ -199,9 +204,9 @@ class _HomeState extends State<Home> {
                   child: Text(
                 txt1,
                 style: TextStyle(
-                    fontSize: fontSize,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               )),
             ),
@@ -238,9 +243,9 @@ class _HomeState extends State<Home> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildContainerData('العمر', nextBirthday.ages.toString()),
-        _buildContainerData('الشهر', nextBirthday.months.toString()),
-        _buildContainerData('اليوم', nextBirthday.days.toString()),
+        //_buildContainerData('-', 'السنة'),
+        _buildContainerData(nextBirthday.months.toString(), 'عدد الأشهر'),
+        _buildContainerData(nextBirthday.days.toString(), 'عدد الأيام'),
       ],
     );
   }
