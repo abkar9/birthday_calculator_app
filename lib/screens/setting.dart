@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'user.dart';
 
 class Setting extends StatefulWidget {
@@ -21,14 +20,10 @@ class SettingState extends State<Setting> {
   var url;
   Launcher launcher = Launcher();
   bool chick = false;
-
   TextStyle style = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   var appbar = AppbarBirthdayApp();
-
   double sizeText = 15.0;
-
-
-
+  SettingState() {}
   @override
   Widget build(BuildContext context) {
     ThemeChanger themeChanger = Provider.of<ThemeChanger>(
@@ -57,74 +52,11 @@ class SettingState extends State<Setting> {
               buttonTHem,
               line,
               about,
-
-              //    stack(),
               rowIcons
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildSetting() {
-    return Center(
-      child: ToggleSwitch(
-        minWidth: 90.0,
-        cornerRadius: 20.0,
-        activeFgColor: Colors.white,
-        activeBgColor: Theme.of(context).accentColor,
-        inactiveBgColor: Colors.grey,
-        inactiveFgColor: Colors.white,
-        activeBgColors: [Colors.blue, Colors.black],
-        labels: ['نهاري', 'ليلي'],
-        icons: [Icons.lightbulb, Icons.nightlight_round],
-        changeOnTap: true,
-        onToggle: (index) {
-          if (index == 0) themeChanger.setTheme(FactoryTheme.lightTheme());
-          if (index == 1) themeChanger.setTheme(FactoryTheme.darkTheme());
-        },
-      ),
-    );
-  }
-
-  Widget buildTheme() {
-    return ListTile(
-      title: Text('الوضع الليلي'),
-      leading: Icon(Icons.color_lens),
-      trailing: Switch(
-        value: chick,
-        onChanged: (_) {
-          if (chick == true) themeChanger.setTheme(FactoryTheme.lightTheme());
-          if (chick == false) themeChanger.setTheme(FactoryTheme.darkTheme());
-          chick = !chick;
-          setState(() {});
-        },
-      ),
-    );
-  }
-
-  Widget buildLanguege() {
-    return Column(
-      children: [
-        ListTile(
-          title: Text(
-            "اللغة",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          leading: Icon(Icons.language),
-          onTap: () {
-            setState(() {});
-          },
-        )
-      ],
-    );
-  }
-
-  Widget buildUnderLine() {
-    return Divider(
-      color: Colors.grey,
-      indent: 50,
     );
   }
 
@@ -182,6 +114,83 @@ class SettingState extends State<Setting> {
     );
   }
 
+  Widget buildLanguege() {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(
+            "اللغة",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          leading: Icon(Icons.language),
+          onTap: () {
+            setState(() {});
+          },
+        )
+      ],
+    );
+  }
+
+  Widget buildUnderLine() {
+    return Divider(
+      color: Colors.grey,
+      indent: 50,
+    );
+  }
+
+  Widget buildTheme() {
+    if (themeChanger.getTheme() == FactoryTheme.darkTheme()) {
+      chick = true;
+    }
+    setState(() {});
+    // else if (chick == false) {
+    //   themeChanger.setTheme(FactoryTheme.darkTheme());
+    // }
+    return ListTile(
+      title: Text('الوضع الليلي'),
+      leading: Icon(Icons.color_lens),
+      trailing: Switch(
+        value: chick,
+        onChanged: (_) {
+          setState(
+            () {
+              if (chick == true) {
+                themeChanger.setTheme(FactoryTheme.lightTheme());
+              } else if (chick == false) {
+                themeChanger.setTheme(FactoryTheme.darkTheme());
+              }
+
+              chick = !chick;
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAbout() {
+    return Container(
+      height: 150,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: ExpansionTile(
+        children: [
+          Container(
+            child: Text(
+              'معلومات حول التطبيق',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Container(
+            child: Text(
+                'أهلا وسهلا بكم في تطبيق حساب العمر حيث يقوم التطبيق بحساب العمر والمتبقي من تاريخ الميلاد خلال فترة الحساب . '),
+          ),
+        ],
+        title: Text('حول ', style: style),
+        leading: Icon(Icons.info),
+      ),
+    );
+  }
+
   Widget buildRowIcons() {
     return Container(
       height: 130,
@@ -225,62 +234,6 @@ class SettingState extends State<Setting> {
         onPressed: () {
           launcher.launchURL('mailto: n.abkar9@gmail.com');
         },
-      ),
-    );
-  }
-
-  Widget stack() {
-    return Container(
-      height: 300,
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 5,
-            child: Container(
-              child: Card(
-                color: Colors.grey,
-              ),
-            ),
-            height: 200,
-            width: 400,
-          ),
-          Container(
-            height: 150,
-            width: 200,
-            child: Positioned(
-              right: 15,
-              child: CircleAvatar(
-                child: Icon(
-                  Icons.person,
-                  size: 100,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAbout() {
-    return Container(
-      height: 150,
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: ExpansionTile(
-        children: [
-          Container(
-            child: Text(
-              'معلومات حول التطبيق',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          Container(
-            child: Text(
-                'أهلا وسهلا بكم في تطبيق حساب العمر حيث يقوم التطبيق بحساب العمر والمتبقي من تاريخ الميلاد خلال فترة الحساب . '),
-          ),
-        ],
-        title: Text('حول ', style: style),
-        leading: Icon(Icons.info),
       ),
     );
   }

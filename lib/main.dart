@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         ),
         splash: Image.asset(
           'images/bg_logo.png',
-
         ),
         backgroundColor: Colors.white,
         animationDuration: Duration(milliseconds: 700),
